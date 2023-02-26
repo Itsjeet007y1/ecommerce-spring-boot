@@ -53,6 +53,14 @@
             <artifactId>okta-spring-boot-starter</artifactId>
             <version>2.1.6</version>
         </dependency>
+
+        <!--   Stripe dependency     -->
+        <!--For detailed setup, see our quickstarts at https://stripe.com/docs/development/quickstart-->
+        <dependency>
+            <groupId>com.stripe</groupId>
+            <artifactId>stripe-java</artifactId>
+            <version>20.80.0</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -1,8 +1,12 @@
 package com.ect.ecommercespringboot.controller;
 
+import com.ect.ecommercespringboot.dto.PaymentInfo;
 import com.ect.ecommercespringboot.dto.Purchase;
 import com.ect.ecommercespringboot.dto.PurchaseResponse;
 import com.ect.ecommercespringboot.service.CheckoutService;
+import com.stripe.model.PaymentIntent;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -20,5 +24,12 @@ public class CheckoutController {
     public PurchaseResponse placeOrder(@RequestBody Purchase purchase) {
         PurchaseResponse purchaseResponse = checkoutService.placeOrder(purchase);
         return purchaseResponse;
+    }
+
+    @PostMapping("/payment-intent")
+    public ResponseEntity<String> createPaymentIntent(@RequestBody PaymentInfo paymentInfo) throws Exception {
+        PaymentIntent paymentIntent = checkoutService.createPaymentIntent(paymentInfo);
+        String paymentString = paymentIntent.toJson();
+        return new ResponseEntity<>(paymentString, HttpStatus.OK);
     }
 }
