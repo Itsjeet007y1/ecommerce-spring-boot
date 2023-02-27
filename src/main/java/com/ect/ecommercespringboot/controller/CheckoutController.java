@@ -9,12 +9,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.logging.Logger;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/checkout")
 public class CheckoutController {
 
     private CheckoutService checkoutService;
+
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     public CheckoutController(CheckoutService checkoutService) {
         this.checkoutService = checkoutService;
@@ -28,6 +32,9 @@ public class CheckoutController {
 
     @PostMapping("/payment-intent")
     public ResponseEntity<String> createPaymentIntent(@RequestBody PaymentInfo paymentInfo) throws Exception {
+
+        logger.info("paymentInfo.amount: " + paymentInfo.getAmount());
+
         PaymentIntent paymentIntent = checkoutService.createPaymentIntent(paymentInfo);
         String paymentString = paymentIntent.toJson();
         return new ResponseEntity<>(paymentString, HttpStatus.OK);
